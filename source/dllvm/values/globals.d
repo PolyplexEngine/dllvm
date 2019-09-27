@@ -1,16 +1,15 @@
 module dllvm.values.globals;
-import llvm;
-import dllvm;
-import dllvm.values;
-import dllvm.enums;
-import std.traits;
 import std.string : fromStringz, toStringz;
+import dllvm;
+import llvm;
 
 /**
     A global value
 */
 class GlobalValue : Value {
 protected:
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -144,6 +143,8 @@ public:
 */
 class GlobalAlias : GlobalValue {
 protected:
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -200,6 +201,8 @@ public:
 */
 class GlobalVariable : GlobalValue {
 protected:
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }

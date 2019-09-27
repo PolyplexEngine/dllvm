@@ -1,6 +1,6 @@
 module dllvm.values.nil;
-import llvm;
 import dllvm;
+import llvm;
 
 /**
     A null value

@@ -1,17 +1,15 @@
 module dllvm.values.constants;
-import llvm;
-import dllvm;
-import dllvm.values;
-import dllvm.enums;
-import std.traits;
 import std.string : fromStringz, toStringz;
+import dllvm;
+import llvm;
 
 /**
     A constant value
 */
 class Constant : User {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -25,7 +23,8 @@ public:
 */
 class ConstInt : Constant {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -70,7 +69,8 @@ public:
 */
 class ConstReal : Constant {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -108,7 +108,8 @@ public:
 */
 class ConstDataSeq : Constant {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -134,7 +135,8 @@ public:
 */
 class ConstString : ConstDataSeq {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -169,7 +171,8 @@ public:
 */
 class ConstStruct : ConstDataSeq {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -216,7 +219,8 @@ public:
 */
 class ConstArray : ConstDataSeq {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -249,7 +253,8 @@ public:
 */
 class ConstVector : ConstDataSeq {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
@@ -275,7 +280,8 @@ public:
 */
 class ConstantExpr : Constant {
 protected:
-    /// This allows cloning and creation from other sources.
+
+    /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {
         super(ptr);
     }
