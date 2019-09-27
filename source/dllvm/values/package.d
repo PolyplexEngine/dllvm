@@ -2,6 +2,7 @@ module dllvm.values;
 public import dllvm.values.nil;
 public import dllvm.values.constants;
 public import dllvm.values.globals;
+public import dllvm.values.functions;
 import llvm;
 import dllvm;
 
@@ -31,24 +32,3 @@ public:
         LLVMSetOperand(value.ptr, index, value.ptr);
     }
 }
-
-/**
-    A function constant
-*/
-class Function : Constant {
-package(dllvm):
-    /// This allows cloning and creation from other sources.
-    this(LLVMValueRef ptr) {
-        super(ptr);
-    }
-
-public:
-
-}
-
-// /**
-//     An argument value
-// */
-// class Argument : Value {
-
-// }
