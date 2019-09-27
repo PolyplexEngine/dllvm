@@ -298,9 +298,9 @@ public:
     }
 
     /**
-        Disposes module
+        Disposes module on destruction
     */
-    void Dispose() {
+    ~this() {
         LLVMDisposeModule(ptr);
     }
 
