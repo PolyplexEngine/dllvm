@@ -419,6 +419,11 @@ private:
 public:
 
     /**
+        The LLVM level pointer to this object
+    */
+    LLVMTypeRef ptr;
+
+    /**
         This allows cloning and creation from other sources, as well storing type kind info
         It should not be called directly.
     */
@@ -426,12 +431,6 @@ public:
         this.ptr = ptr;
         this.kind = kind;
     }
-
-    /**
-        The LLVM level pointer to this object
-    */
-    LLVMTypeRef ptr;
-
 
     /**
         The kind of Type this type is.
