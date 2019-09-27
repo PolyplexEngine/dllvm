@@ -152,7 +152,7 @@ public:
     /**
         Creates a new global alias
     */
-    this(Module mod, Type type, Type aliasee, string name) {
+    this(Module mod, Type type, Value aliasee, string name) {
         super(LLVMAddAlias(mod.ptr, type.ptr, aliasee.ptr, name.toStringz));
     }
 

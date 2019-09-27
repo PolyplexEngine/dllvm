@@ -396,7 +396,7 @@ public:
         Gets the last function in the module
     */
     @property
-    GlobalValue LastFunction() {
+    Function LastFunction() {
         return cast(Function)(new Value(LLVMGetLastFunction(ptr)));
     }
 
@@ -436,7 +436,8 @@ public:
         Returns a global variable from the module by name
     */
     GlobalAlias GetAlias(string name) {
-        auto valptr = LLVMGetNamedGlobalAlias(ptr, name.toStringz);
+        CStrInfo cstr = strToCstr(name);
+        auto valptr = LLVMGetNamedGlobalAlias(ptr, cstr.cstr, cstr.len);
         return valptr !is null ? cast(GlobalAlias)(new Value(valptr)) : null;
     }
 
