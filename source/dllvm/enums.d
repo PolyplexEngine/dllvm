@@ -174,3 +174,14 @@ enum AddressSignificance {
     /// Address of the Global Value is *globally insignificant*
     GloballyInsignificant   = LLVMGlobalUnnamedAddr
 }
+
+/**
+    An LLVM Thread Local Mode
+*/
+enum ThreadLocalModeType : LLVMThreadLocalMode {
+    NotThreadLocal =            LLVMNotThreadLocal,
+    GeneralDynamicTLSModel =    LLVMGeneralDynamicTLSModel,
+    LocalDynamicTLSModel =      LLVMLocalDynamicTLSModel,
+    InitialExecTLSModel =       LLVMInitialExecTLSModel,
+    LocalExecTLSModel =         LLVMLocalExecTLSModel
+}

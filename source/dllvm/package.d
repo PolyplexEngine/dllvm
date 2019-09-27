@@ -369,11 +369,75 @@ public:
     }
 
     /**
+        Gets the first global variable in the module
+    */
+    @property
+    GlobalValue FirstGlobal() {
+        return cast(GlobalValue)(new Value(LLVMGetFirstGlobal(ptr)));
+    }
+
+    /**
+        Gets the last global variable in the module
+    */
+    @property
+    GlobalValue LastGlobal() {
+        return cast(GlobalValue)(new Value(LLVMGetLastGlobal(ptr)));
+    }
+
+    /**
+        Gets the first function in the module
+    */
+    @property
+    Function FirstFunction() {
+        return cast(Function)(new Value(LLVMGetFirstFunction(ptr)));
+    }
+
+    /**
+        Gets the last function in the module
+    */
+    @property
+    GlobalValue LastFunction() {
+        return cast(Function)(new Value(LLVMGetLastFunction(ptr)));
+    }
+
+    /**
+        Gets the first alias in the module
+    */
+    @property
+    GlobalAlias FirstAlias() {
+        return cast(GlobalAlias)(new Value(LLVMGetFirstGlobalAlias(ptr)));
+    }
+
+    /**
+        Gets the last alias in the module
+    */
+    @property
+    GlobalValue LastAlias() {
+        return cast(GlobalAlias)(new Value(LLVMGetLastGlobalAlias(ptr)));
+    }
+
+    /**
+        Returns a global variable from the module by name
+    */
+    GlobalValue GetGlobal(string name) {
+        auto valptr = LLVMGetNamedGlobal(ptr, name.toStringz);
+        return valptr !is null ? cast(GlobalValue)(new Value(valptr)) : null;
+    }
+
+    /**
         Returns a function from the module by name
     */
     Value GetFunction(string name) {
         auto valptr = LLVMGetNamedFunction(ptr, name.toStringz);
         return valptr !is null ? new Function(valptr) : null;
+    }
+
+    /**
+        Returns a global variable from the module by name
+    */
+    GlobalAlias GetAlias(string name) {
+        auto valptr = LLVMGetNamedGlobalAlias(ptr, name.toStringz);
+        return valptr !is null ? cast(GlobalAlias)(new Value(valptr)) : null;
     }
 
     /**
