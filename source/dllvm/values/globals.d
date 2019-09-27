@@ -220,9 +220,9 @@ public:
     }
 
     /**
-        On destruction of this global it is deleted.
+        Deletes this global variable from the module
     */
-    ~this() {
+    void Delete() {
         LLVMDeleteGlobal(ptr);
     }
 
