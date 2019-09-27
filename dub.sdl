@@ -1,0 +1,7 @@
+name "dllvm"
+description "An OOP wrapper around llvm-d"
+authors "clipsey"
+copyright "Copyright © 2019, clipsey"
+license "Boost"
+dependency "llvm-d" version="~>3.0.0"
+versions "LLVM_Load"

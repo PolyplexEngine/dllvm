@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/dllvm
+libdllvm.so
+dllvm.dylib
+dllvm.dll
+libdllvm.a
+dllvm.lib
+dllvm-test-*
+*.exe
+*.o
+*.obj
+*.lst
