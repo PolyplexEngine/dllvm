@@ -5,6 +5,7 @@ public import dllvm.types;
 public import dllvm.context;
 public import dllvm.mod;
 public import dllvm.basicblock;
+public import dllvm.builder;
 import llvm;
 import std.string : toStringz, fromStringz;
 

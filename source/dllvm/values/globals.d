@@ -7,7 +7,7 @@ import llvm;
     A global value
 */
 class GlobalValue : Value {
-protected:
+package(dllvm):
 
     /// Hidden constructor for backend uses.
     this(LLVMValueRef ptr) {

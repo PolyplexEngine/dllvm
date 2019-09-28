@@ -110,6 +110,38 @@ public:
     }
 
     /**
+        Gets the count of Basic Blocks in this function
+    */
+    @property
+    uint BlockCount() {
+        return LLVMCountBasicBlocks(ptr);
+    }
+
+    /**
+        Gets the function entry basic block
+    */
+    @property
+    BasicBlock Entry() {
+        return new BasicBlock(LLVMGetEntryBasicBlock(ptr));
+    }
+
+    /**
+        Gets the first basic block in this function
+    */
+    @property
+    BasicBlock FirstBlock() {
+        return new BasicBlock(LLVMGetFirstBasicBlock(ptr));
+    }
+
+    /**
+        Gets the first basic block in this function
+    */
+    @property
+    BasicBlock LastBlock() {
+        return new BasicBlock(LLVMGetLastBasicBlock(ptr));
+    }
+
+    /**
         Gets the parameter at the specified index
     */
     Value GetParam(uint index) {
@@ -121,7 +153,32 @@ public:
     /**
         Creates a basic block with the specified name in the function
     */
+    BasicBlock AppendBasicBlock(Context ctx, string name) {
+        return new BasicBlock(LLVMAppendBasicBlockInContext(ctx.ptr, ptr, name.toStringz));
+    }
+
+    /**
+        Creates a basic block with the specified name in the function
+    */
     BasicBlock AppendBasicBlock(string name) {
-        return new BasicBlock(LLVMAppendBasicBlock(ptr, name.toStringz));
+        return AppendBasicBlock(Context.Global, name);
+    }
+
+    /**
+        Returns the Basic Blocks attached to this function
+    */
+    BasicBlock[] GetBlocks() {
+
+        // Create new arrays of proper size
+        immutable(uint) blockCount = BlockCount();
+        BasicBlock[] outVar = new BasicBlock[blockCount];
+        LLVMBasicBlockRef[] blocks = new LLVMBasicBlockRef[blockCount];
+
+        // Fetch the blocks
+        LLVMGetBasicBlocks(ptr, blocks.ptr);
+
+        // Iterate and upgrade to D types
+        foreach(i, item; blocks) outVar[i] = new BasicBlock(item); 
+        return outVar;
     }
 }

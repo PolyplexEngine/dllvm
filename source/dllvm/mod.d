@@ -110,7 +110,7 @@ public:
     */
     @property
     GlobalValue FirstGlobal() {
-        return cast(GlobalValue)(new Value(LLVMGetFirstGlobal(ptr)));
+        return new GlobalValue(LLVMGetFirstGlobal(ptr));
     }
 
     /**
@@ -118,7 +118,7 @@ public:
     */
     @property
     GlobalValue LastGlobal() {
-        return cast(GlobalValue)(new Value(LLVMGetLastGlobal(ptr)));
+        return new GlobalValue(LLVMGetLastGlobal(ptr));
     }
 
     /**
@@ -126,7 +126,7 @@ public:
     */
     @property
     Function FirstFunction() {
-        return cast(Function)(new Value(LLVMGetFirstFunction(ptr)));
+        return new Function(LLVMGetFirstFunction(ptr));
     }
 
     /**
@@ -134,7 +134,7 @@ public:
     */
     @property
     Function LastFunction() {
-        return cast(Function)(new Value(LLVMGetLastFunction(ptr)));
+        return new Function(LLVMGetLastFunction(ptr));
     }
 
     /**
@@ -142,7 +142,7 @@ public:
     */
     @property
     GlobalAlias FirstAlias() {
-        return cast(GlobalAlias)(new Value(LLVMGetFirstGlobalAlias(ptr)));
+        return new GlobalAlias(LLVMGetFirstGlobalAlias(ptr));
     }
 
     /**
@@ -150,7 +150,7 @@ public:
     */
     @property
     GlobalValue LastAlias() {
-        return cast(GlobalAlias)(new Value(LLVMGetLastGlobalAlias(ptr)));
+        return new GlobalAlias(LLVMGetLastGlobalAlias(ptr));
     }
 
     /**
