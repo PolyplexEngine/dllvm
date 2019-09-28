@@ -219,6 +219,43 @@ public:
     }
 
     /**
+        Builds a catch pad instruction
+
+        TODO: FLAVOUR TEXT
+    */
+    Value BuildCatchPad(Value parentPad, Value[] args, string name = "") {
+
+        // Convert D Value to LLVM native types
+        LLVMValueRef[] refs = new LLVMValueRef[args.length];
+        foreach(i, item; args) refs[i] = item.ptr; 
+
+        return new Value(LLVMBuildCatchPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+    }
+
+    /**
+        Builds a cleanup pad instruction
+
+        TODO: FLAVOUR TEXT
+    */
+    Value BuildCleanupPad(Value parentPad, Value[] args, string name = "") {
+
+        // Convert D Value to LLVM native types
+        LLVMValueRef[] refs = new LLVMValueRef[args.length];
+        foreach(i, item; args) refs[i] = item.ptr; 
+
+        return new Value(LLVMBuildCleanupPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+    }
+
+    /**
+        Builds a catch switch instruction
+
+        TODO: FLAVOUR TEXT
+    */
+    Value BuildCatchSwitch(Value parentPad, BasicBlock unwind, uint handlerCount, string name = "") {
+        return new Value(LLVMBuildCatchSwitch(ptr, parentPad.ptr, unwind.ptr, handlerCount, name.toStringz));
+    }
+
+    /**
         Builds a signed division instruction
     */
     Value BuildSDiv(Value rhs, Value lhs, string name = "") {
