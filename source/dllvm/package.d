@@ -6,6 +6,7 @@ public import dllvm.context;
 public import dllvm.mod;
 public import dllvm.basicblock;
 public import dllvm.builder;
+public import dllvm.attr;
 import llvm;
 import std.string : toStringz, fromStringz;
 

@@ -3,6 +3,7 @@ public import dllvm.values.nil;
 public import dllvm.values.constants;
 public import dllvm.values.globals;
 public import dllvm.values.functions;
+public import dllvm.values.instructions;
 import std.string : fromStringz, toStringz;
 import dllvm;
 import llvm;
