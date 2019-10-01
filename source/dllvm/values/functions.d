@@ -165,6 +165,20 @@ public:
     }
 
     /**
+        Appends an entry block in to the function
+    */
+    BasicBlock AppendEntryBlock(Context ctx) {
+        return AppendBasicBlock(ctx, "entry");
+    }
+
+    /**
+        Appends an entry block in to the function
+    */
+    BasicBlock AppendEntryBlock() {
+        return AppendBasicBlock("entry");
+    }
+
+    /**
         Returns the Basic Blocks attached to this function
     */
     BasicBlock[] GetBlocks() {
