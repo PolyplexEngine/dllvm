@@ -192,7 +192,14 @@ enum ThreadLocalModeType : LLVMThreadLocalMode {
     Taken from http://llvm.org/doxygen/CallingConv_8h_source.html#l00024
 */
 enum CallingConventionType : uint {
+    /**
+        Default calling convention, only one that supports va args
+
+        You should not change this unless you know what you're doing.
+    */
     C =                         0,
+
+    /// LLVM FastCall
     Fast =                      8,
     Cold =                      9,
     GHC =                       10,
@@ -239,4 +246,152 @@ enum CallingConventionType : uint {
     AArch64_SVE_VectorCall =    98,
     WASM_EmscriptenInvoke =     99,
     MaxID =                     1023
+}
+
+/**
+    The kinds of attributes
+
+    Taken from https://code.woboq.org/llvm/include/llvm/IR/Attributes.inc.html
+*/
+enum AttributeKind : LLVMAttributeIndex {
+    
+    /// No attributes
+    None = 0,
+
+    Alignment,
+    AllocSize,
+    AlwaysInline,
+    ArgMemOnly,
+    Builtin,
+    ByVal,
+    Cold,
+    Convergent,
+    Dereferenceable,
+    DereferenceableOrNull,
+    InAlloca,
+    InReg,
+    InaccessibleMemOnly,
+    InaccessibleMemOrArgMemOnly,
+    InlineHint,
+    JumpTable,
+    MinSize,
+    Naked,
+    Nest,
+    NoAlias,
+    NoBuiltin,
+    NoCapture,
+    NoCfCheck,
+    NoDuplicate,
+    NoImplicitFloat,
+    NoInline,
+    NoRecurse,
+    NoRedZone,
+    NoReturn,
+    NoUnwind,
+    NonLazyBind,
+    NonNull,
+    OptForFuzzing,
+    OptimizeForSize,
+    OptimizeNone,
+    ReadNone,
+    ReadOnly,
+    Returned,
+    ReturnsTwice,
+    SExt,
+    SafeStack,
+    SanitizeAddress,
+    SanitizeHWAddress,
+    SanitizeMemory,
+    SanitizeThread,
+    ShadowCallStack,
+    Speculatable,
+    StackAlignment,
+    StackProtect,
+    StackProtectReq,
+    StackProtectStrong,
+    StrictFP,
+    StructRet,
+    SwiftError,
+    SwiftSelf,
+    UWTable,
+    WriteOnly,
+    ZExt,
+
+    /// Value useful for loops
+    EndAttrKinds
+}
+
+/**
+    Gets an attribute kind from a string
+*/
+AttributeKind toAttributeKind(string name) {
+    switch(name) {
+        case "align": return AttributeKind.Alignment;
+        case "allocsize": return AttributeKind.AllocSize;
+        case "alwaysinline": return AttributeKind.AlwaysInline;
+        case "argmemonly": return AttributeKind.ArgMemOnly;
+        case "builtin": return AttributeKind.Builtin;
+        case "byval": return AttributeKind.ByVal;
+        case "cold": return AttributeKind.Cold;
+        case "convergent": return AttributeKind.Convergent;
+        case "dereferenceable": return AttributeKind.Dereferenceable;
+        case "dereferenceable_or_null": return AttributeKind.DereferenceableOrNull;
+        case "inalloca": return AttributeKind.InAlloca;
+        case "inreg": return AttributeKind.InReg;
+        case "inaccessiblememonly": return AttributeKind.InaccessibleMemOnly;
+        case "inaccessiblemem_or_argmemonly": return AttributeKind.InaccessibleMemOrArgMemOnly;
+        case "inlinehint": return AttributeKind.InlineHint;
+        case "jumptable": return AttributeKind.JumpTable;
+        case "minsize": return AttributeKind.MinSize;
+        case "naked": return AttributeKind.Naked;
+        case "nest": return AttributeKind.Nest;
+        case "noalias": return AttributeKind.NoAlias;
+        case "nobuiltin": return AttributeKind.NoBuiltin;
+        case "nocapture": return AttributeKind.NoCapture;
+        case "nocfcheck": return AttributeKind.NoCfCheck;
+        case "noduplicate": return AttributeKind.NoDuplicate;
+        case "noimplictfloat": return AttributeKind.NoImplicitFloat;
+        case "noinline": return AttributeKind.NoInline;
+        case "norecurse": return AttributeKind.NoRecurse;
+        case "noredzone": return AttributeKind.NoRedZone;
+        case "noreturn": return AttributeKind.NoReturn;
+        case "nounwind": return AttributeKind.NoUnwind;
+        case "nonlazybind": return AttributeKind.NonLazyBind;
+        case "nonnull": return AttributeKind.NonNull;
+        case "optforfuzzing": return AttributeKind.OptForFuzzing;
+        case "optsize": return AttributeKind.OptimizeForSize;
+        case "optnone": return AttributeKind.OptimizeNone;
+        case "readnone": return AttributeKind.ReadNone;
+        case "readonly": return AttributeKind.ReadOnly;
+        case "returned": return AttributeKind.Returned;
+        case "returns_twice": return AttributeKind.ReturnsTwice;
+        case "signext": return AttributeKind.SExt;
+        case "safestack": return AttributeKind.SafeStack;
+        case "sanitize_address": return AttributeKind.SanitizeAddress;
+        case "sanitize_hwaddress": return AttributeKind.SanitizeHWAddress;
+        case "sanitize_memory": return AttributeKind.SanitizeMemory;
+        case "sanitize_thread": return AttributeKind.SanitizeThread;
+        case "shadowcallstack": return AttributeKind.ShadowCallStack;
+        case "speculatable": return AttributeKind.Speculatable;
+        case "alignstack": return AttributeKind.StackAlignment;
+        case "ssp": return AttributeKind.StackProtect;
+        case "sspreq": return AttributeKind.StackProtectReq;
+        case "sspstrong": return AttributeKind.StackProtectStrong;
+        case "strictfp": return AttributeKind.StrictFP;
+        case "sret": return AttributeKind.StructRet;
+        case "swifterror": return AttributeKind.SwiftError;
+        case "swiftself": return AttributeKind.SwiftSelf;
+        case "uwtable": return AttributeKind.UWTable;
+        case "writeonly": return AttributeKind.WriteOnly;
+        case "zeroext": return AttributeKind.ZExt;
+        default: return AttributeKind.None;
+    }
+}
+
+/**
+    Attribute Index
+*/
+enum AttributeIndex : LLVMAttributeIndex {
+    Return = LLVMAttributeReturnIndex,
+    Function = LLVMAttributeFunctionIndex
 }
