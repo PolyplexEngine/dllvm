@@ -14,7 +14,6 @@ package(dllvm):
     }
 
 public:
-
 }
 
 /**
@@ -54,6 +53,44 @@ public:
 
 }
 
+/**
+    An LLVM catch pad
+*/
+class CatchPad : Instruction {
+package(dllvm):
+
+    /// Hidden constructor for backend uses.
+    this(LLVMValueRef ptr) {
+        super(ptr);
+    }
+public:
+    /**
+        Gets the parent catch switch
+    */
+    @property
+    Value ParentCatchSwitch() {
+        return new Value(LLVMGetParentCatchSwitch(ptr));
+    }
+
+    /**
+        Sets the parent catch switch
+    */
+    @property
+    void ParentCatchSwitch(Value value) {
+        LLVMSetParentCatchSwitch(ptr, value.ptr);
+    }
+}
+
+/**
+    An LLVM Cleanup pad
+*/
 class CleanupPad : Instruction {
-    
+package(dllvm):
+
+    /// Hidden constructor for backend uses.
+    this(LLVMValueRef ptr) {
+        super(ptr);
+    }
+public:
+
 }

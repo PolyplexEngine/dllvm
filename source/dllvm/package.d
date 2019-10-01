@@ -7,6 +7,7 @@ public import dllvm.mod;
 public import dllvm.basicblock;
 public import dllvm.builder;
 public import dllvm.attr;
+public import dllvm.exengine;
 import llvm;
 import std.string : toStringz, fromStringz;
 

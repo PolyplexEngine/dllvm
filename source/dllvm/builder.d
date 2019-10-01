@@ -196,8 +196,8 @@ public:
 
         Specifies that this basic block is a block where an exception can land, persFunc specifies the personality function used on re-entry.
     */
-    Value BuildLandingPad(Type type, Function persFunc, uint clauseCount, string name = "") {
-        return new Value(LLVMBuildLandingPad(ptr, type.ptr, persFunc.ptr, clauseCount, name.toStringz));
+    LandingPad BuildLandingPad(Type type, Function persFunc, uint clauseCount, string name = "") {
+        return new LandingPad(LLVMBuildLandingPad(ptr, type.ptr, persFunc.ptr, clauseCount, name.toStringz));
     }
 
     /**
@@ -223,13 +223,13 @@ public:
 
         TODO: FLAVOUR TEXT
     */
-    Value BuildCatchPad(Value parentPad, Value[] args, string name = "") {
+    CatchPad BuildCatchPad(Value parentPad, Value[] args, string name = "") {
 
         // Convert D Value to LLVM native types
         LLVMValueRef[] refs = new LLVMValueRef[args.length];
         foreach(i, item; args) refs[i] = item.ptr; 
 
-        return new Value(LLVMBuildCatchPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+        return new CatchPad(LLVMBuildCatchPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
     }
 
     /**
@@ -237,13 +237,13 @@ public:
 
         TODO: FLAVOUR TEXT
     */
-    Value BuildCleanupPad(Value parentPad, Value[] args, string name = "") {
+    CleanupPad BuildCleanupPad(Value parentPad, Value[] args, string name = "") {
 
         // Convert D Value to LLVM native types
         LLVMValueRef[] refs = new LLVMValueRef[args.length];
         foreach(i, item; args) refs[i] = item.ptr; 
 
-        return new Value(LLVMBuildCleanupPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+        return new CleanupPad(LLVMBuildCleanupPad(ptr, parentPad.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
     }
 
     /**
@@ -253,6 +253,152 @@ public:
     */
     Value BuildCatchSwitch(Value parentPad, BasicBlock unwind, uint handlerCount, string name = "") {
         return new Value(LLVMBuildCatchSwitch(ptr, parentPad.ptr, unwind.ptr, handlerCount, name.toStringz));
+    }
+
+    /**
+        Builds an add operator
+    */
+    BinaryOperator BuildAdd(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildAdd(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        Builds an NSWAdd operator
+    */
+    BinaryOperator BuildNSWAdd(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNSWAdd(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildNUWAdd(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNUWAdd(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildFAdd(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildFAdd(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildSub(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildSub(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildNSWSub(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNSWSub(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildNUWSub(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNUWSub(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildFSub(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildFSub(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildMul(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildMul(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildNSWMul(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNSWMul(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildNUWMul(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildNUWMul(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildFMul(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildFMul(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildUDiv(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildUDiv(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildExactUDiv(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildExactUDiv(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildSDiv(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildSDiv(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildExactSDiv(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildExactSDiv(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        TODO
+    */
+    BinaryOperator BuildFDiv(Value lhs, Value rhs, string name = "") {
+        return new BinaryOperator(LLVMBuildFDiv(ptr, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        Builds a call instruction
+    */
+    Value BuildCall(Function func, Value[] args, string name = "") {
+
+        // Convert D Value to LLVM native types
+        LLVMValueRef[] refs = new LLVMValueRef[args.length];
+        foreach(i, item; args) refs[i] = item.ptr; 
+
+        return new Value(LLVMBuildCall(ptr, func.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+    }
+
+    /**
+        Adds a case to the specified switch statement, with the specified value.
+        The provided basic block is used as the endpoint if the switch resolves to the specified value.
+    */
+    void AddCase(Value switch_, Value onVal, BasicBlock dest) {
+        LLVMAddCase(switch_.ptr, onVal.ptr, dest.ptr);
+    }
+
+    /**
+        Adds a basic block as a destination for an indirect branch
+    */
+    void AddDestination(Value indirectBr, BasicBlock dest) {
+        LLVMAddDestination(indirectBr.ptr, dest.ptr);
     }
 
     /**
