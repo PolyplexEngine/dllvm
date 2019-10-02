@@ -4,12 +4,14 @@ unittest {
     import dllvm, std.stdio;
 
     loadLLVM();
+    initExecutionEngine();
 
     Context ctx = new Context();
     Module mod = new Module("MyModule", ctx);
     Builder builder = new Builder(ctx);
 
     Function myFunction;
+    Function myFunction2;
 
     /**
         Adder function
@@ -30,8 +32,46 @@ unittest {
     writeln(mod.toString());
 
     ExecutionEngine exEngine = new ExecutionEngine(mod);
-    GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
     
-    writeln("D call @myFunction i32 10 i32 20 = ", value.GetValue!int());
+    alias myFuncType = int function(int, int);
+    myFuncType myFunc = exEngine.GetFunctionAddr!myFuncType("myFunction");
+
+    //GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
+    
+    foreach(x; 1..10) {
+        foreach_reverse(y; 1..10) {
+            writeln(myFunc(x, y));
+        }
+    }
+
+    /**
+        Multiply function
+    */
+    {
+        FuncType fType = ctx.CreateFunction(ctx.CreateInt32(), [ctx.CreateInt32(), ctx.CreateInt32()], false);
+        myFunction = new Function(mod, fType, "myFunction2");
+        BasicBlock entry = myFunction.AppendBasicBlock(ctx, "entry");
+        builder.PositionAtStart(entry);
+        Value valA = myFunction.GetParam(0);
+        valA.Name = "paramA";
+        Value valB = myFunction.GetParam(1);
+        valB.Name = "paramB";
+        Value result = builder.BuildMul(valA, valB, "result");
+        builder.BuildRet(result);
+    }
+
+    exEngine.RecompileAll();
+
+    writeln("TEST 2");
+
+    myFuncType myFunc2 = exEngine.GetFunctionAddr!myFuncType("myFunction2");
+
+    //GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
+    
+    foreach(x; 1..10) {
+        foreach_reverse(y; 1..10) {
+            writeln(myFunc2(x, y));
+        }
+    }
 
 }
