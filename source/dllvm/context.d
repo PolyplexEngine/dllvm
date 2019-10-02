@@ -185,7 +185,7 @@ public:
     /**
         Creates a new pointer at the specified address space
     */
-    PointerType CreatePointer(Type type, uint addressSpace) {
+    PointerType CreatePointer(Type type, uint addressSpace = 0) {
         return new PointerType(LLVMArrayType(type.ptr, addressSpace), TypeKind.Pointer);
     }
 
