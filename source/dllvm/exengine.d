@@ -23,6 +23,8 @@ void initExecutionEngine() {
 class ExecutionEngine {
 private:
     Module[] managedModules;
+    bool initalized = false;
+    LLVMMCJITCompilerOptions options;
 
 package(dllvm):
 
@@ -43,12 +45,33 @@ public:
     this(Module mod, bool useMCJIT = true) {
         char* error;
         if (useMCJIT) {
-            LLVMMCJITCompilerOptions options;
             LLVMInitializeMCJITCompilerOptions(&options, options.sizeof);
-
             LLVMCreateMCJITCompilerForModule(&ptr, mod.ptr, &options, options.sizeof, &error);
+
         } else {
             LLVMCreateExecutionEngineForModule(&ptr, mod.ptr, &error);
+        }
+
+        if (error) {
+            scope (exit) LLVMDisposeMessage(error);
+            throw new Exception(error.fromStringz().idup);
+        }
+        initalized = true;
+
+        // Add to the managed modules list.
+        managedModules ~= mod;
+    }
+
+    /**
+        Initialized execution engine for module
+    */
+    this(bool useMCJIT = true) {
+        char* error;
+        if (useMCJIT) {
+            LLVMInitializeMCJITCompilerOptions(&options, options.sizeof);
+        } else {
+            LLVMCreateExecutionEngine(&ptr, mod.ptr, &error);
+            initalized = true;
         }
 
         if (error) {
@@ -80,6 +103,18 @@ public:
         Adds a module to the execution engine
     */
     void AddModule(Module mod) {
+        if (!initalized) {
+            // Initalized is only false if MCJIT is not initalized with a module, so we do it here.
+            LLVMInitializeMCJITCompilerOptions(&options, options.sizeof);
+            LLVMCreateMCJITCompilerForModule(&ptr, mod.ptr, &options, options.sizeof, &error);
+
+            if (error) {
+                scope (exit) LLVMDisposeMessage(error);
+                throw new Exception(error.fromStringz().idup);
+            }
+            initalized = true;
+            return;
+        }
         LLVMAddModule(ptr, mod.ptr);
         managedModules ~= mod;
     }
