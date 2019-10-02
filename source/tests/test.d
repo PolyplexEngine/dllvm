@@ -49,22 +49,24 @@ unittest {
     */
     {
         FuncType fType = ctx.CreateFunction(ctx.CreateInt32(), [ctx.CreateInt32(), ctx.CreateInt32()], false);
-        myFunction = new Function(mod, fType, "myFunction2");
-        BasicBlock entry = myFunction.AppendBasicBlock(ctx, "entry");
+        myFunction2 = new Function(mod, fType, "myClass::myFunction(void)");
+        BasicBlock entry = myFunction2.AppendBasicBlock(ctx, "entry");
         builder.PositionAtStart(entry);
-        Value valA = myFunction.GetParam(0);
+        Value valA = myFunction2.GetParam(0);
         valA.Name = "paramA";
-        Value valB = myFunction.GetParam(1);
+        Value valB = myFunction2.GetParam(1);
         valB.Name = "paramB";
         Value result = builder.BuildMul(valA, valB, "result");
         builder.BuildRet(result);
+
+        writeln(myFunction2.Name);
     }
 
     exEngine.RecompileAll();
 
     writeln("TEST 2");
 
-    myFuncType myFunc2 = exEngine.GetFunctionAddr!myFuncType("myFunction2");
+    myFuncType myFunc2 = exEngine.GetFunctionAddr!myFuncType("myClass::myFunction(void)");
 
     //GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
     
@@ -73,5 +75,7 @@ unittest {
             writeln(myFunc2(x, y));
         }
     }
+
+    writeln(mod.toString());
 
 }
