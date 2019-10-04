@@ -38,7 +38,8 @@ public:
         Disposes module on destruction
     */
     ~this() {
-        LLVMDisposeModule(ptr);
+        // TODO: Find out why this crashes
+        //LLVMDisposeModule(ptr);
     }
 
     /**
@@ -164,7 +165,7 @@ public:
     /**
         Returns a function from the module by name
     */
-    Value GetFunction(string name) {
+    Function GetFunction(string name) {
         auto valptr = LLVMGetNamedFunction(ptr, name.toStringz);
         return valptr !is null ? new Function(valptr) : null;
     }
