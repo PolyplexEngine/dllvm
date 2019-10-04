@@ -402,13 +402,6 @@ public:
     }
 
     /**
-        Builds a signed division instruction
-    */
-    Value BuildSDiv(Value rhs, Value lhs, string name = "") {
-        return new Value(LLVMBuildSDiv(ptr, rhs.ptr, lhs.ptr, name.toStringz));
-    }
-
-    /**
         Builds a select instruction.
         Select selects a value based on the 1i (bool) value of the if_ value.
     */
@@ -479,6 +472,15 @@ public:
     }
 
     /**
+        Builds a load instruction
+
+        loads value from address
+    */
+    Value BuildLoad(Value addr, string name) {
+        return new Value(LLVMBuildLoad(ptr, addr.ptr, name.toStringz));
+    }
+
+    /**
         Builds a Struct GEP instruction
 
         I don't know what this does yet.
@@ -494,15 +496,6 @@ public:
     */
     Value BuildStructGEP(Type type, Value addr, uint idx, string name = "") {
         return new Value(LLVMBuildStructGEP2(ptr, type.ptr, addr.ptr, idx, name.toStringz));
-    }
-
-    /**
-        Builds a subtract instruction
-
-        Subtracts lhs by rhs
-    */
-    Value BuildSub(Value lhs, Value rhs, string name = "") {
-        return new Value(LLVMBuildSub(ptr, lhs.ptr, rhs.ptr, name.toStringz));
     }
 
     /**
