@@ -38,18 +38,17 @@ unittest {
 
     //GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
     
-    foreach(x; 1..10) {
-        foreach_reverse(y; 1..10) {
-            writeln(myFunc(x, y));
-        }
+    foreach(i; 1..10) {
+        write(myFunc(0, i));
     }
+    write("\n");
 
     /**
         Multiply function
     */
     {
         FuncType fType = ctx.CreateFunction(ctx.CreateInt32(), [ctx.CreateInt32(), ctx.CreateInt32()], false);
-        myFunction2 = new Function(mod, fType, "myClass::myFunction(void)");
+        myFunction2 = new Function(mod, fType, "vector2::addTogether(void)");
         BasicBlock entry = myFunction2.AppendBasicBlock(ctx, "entry");
         builder.PositionAtStart(entry);
         Value valA = myFunction2.GetParam(0);
@@ -58,8 +57,18 @@ unittest {
         valB.Name = "paramB";
         Value result = builder.BuildMul(valA, valB, "result");
         builder.BuildRet(result);
+    }
 
-        writeln(myFunction2.Name);
+    /**
+        Struct
+    */
+    {
+        StructType myStruct = ctx.CreateStruct("vector2");
+        myStruct.SetBody([ctx.CreateInt32(), ctx.CreateInt32()], false);
+        FuncType fType = ctx.CreateFunction(ctx.CreateVoid(), [myStruct], false);
+        Function exFunc = new Function(mod, fType, "vector2::myFunction(myStruct)");
+        builder.PositionAtStart(exFunc.AppendBasicBlock(ctx, "entry"));
+        builder.BuildRetVoid();
     }
 
     exEngine.RecompileAll();
@@ -71,10 +80,9 @@ unittest {
     //GenericValue value = exEngine.RunFunction(myFunction, [GenericValue.NewValue!int(ctx.CreateInt32(), 10), GenericValue.NewValue!int(ctx.CreateInt32(), 20)]);
     
     foreach(x; 1..10) {
-        foreach_reverse(y; 1..10) {
-            writeln(myFunc2(x, y));
-        }
+        write(myFunc2(1, x), " ");
     }
+    write("\n");
 
     writeln(mod.toString());
 
