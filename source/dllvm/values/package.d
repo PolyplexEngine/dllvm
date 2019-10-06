@@ -27,15 +27,12 @@ public:
     LLVMValueRef ptr;
 
     /**
-        Allows casting Value types to BasicBlock (if the type is a valid basic block type)
+        Gets this value as a basic block
     */
-    T opCast(T)() {
-        static if (is(T : BasicBlock)) {
-            if (!LLVMValueIsBasicBlock(ptr)) throw new Exception("Cannot cast non-Basic Block value to Basic Block!");
-            return new T(LLVMValueAsBasicBlock(ptr));
-        } else {
-            return cast(T)this;
-        }
+    @property
+    BasicBlock asBasicBlock() {
+        if (!LLVMValueIsBasicBlock(ptr)) throw new Exception("Cannot cast non-Basic Block value to Basic Block!");
+        return new BasicBlock(LLVMValueAsBasicBlock(ptr));
     }
 
     /**

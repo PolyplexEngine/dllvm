@@ -263,7 +263,7 @@ public:
         Sets this global variable's initializer
     */
     @property
-    void Initiliazer(Constant value) {
+    void Initializer(Constant value) {
         LLVMSetInitializer(ptr, value.ptr);
     }
 

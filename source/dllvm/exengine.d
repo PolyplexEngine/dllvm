@@ -22,6 +22,7 @@ void initExecutionEngine() {
 */
 class ExecutionEngine {
 private:
+    LLVMPassManagerRef pass;
     Module[] managedModules;
     bool initalized = false;
     bool mcjit;
@@ -46,12 +47,21 @@ public:
     this(Module mod, bool useMCJIT = true) {
         mcjit = useMCJIT;
 
+        pass = LLVMCreatePassManager();
+        LLVMAddConstantPropagationPass(pass);
+        LLVMAddInstructionCombiningPass(pass);
+        LLVMAddPromoteMemoryToRegisterPass(pass);
+        LLVMAddGVNPass(pass);
+        LLVMAddCFGSimplificationPass(pass);
+
         char* error;
         if (useMCJIT) {
+            LLVMRunPassManager(pass, mod.ptr);
             LLVMInitializeMCJITCompilerOptions(&options, options.sizeof);
             LLVMCreateMCJITCompilerForModule(&ptr, mod.ptr, &options, options.sizeof, &error);
 
         } else {
+            LLVMRunPassManager(pass, mod.ptr);
             LLVMCreateExecutionEngineForModule(&ptr, mod.ptr, &error);
         }
 
@@ -110,6 +120,7 @@ public:
             initalized = true;
             return;
         }
+        LLVMRunPassManager(pass, mod.ptr);
         LLVMAddModule(ptr, mod.ptr);
         managedModules ~= mod;
     }
@@ -143,6 +154,10 @@ public:
     void Recompile(Module mod) {
         RemoveModule(mod);
         AddModule(mod);
+    }
+
+    void Optimize() {
+
     }
 
     /**

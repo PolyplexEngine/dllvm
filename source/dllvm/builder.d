@@ -428,6 +428,20 @@ public:
     }
 
     /**
+        Builds a floating point cast
+    */
+    Value BuildFPCast(Value value, Type destType, string name = "") {
+        return new Value(LLVMBuildFPCast(ptr, value.ptr, destType.ptr, name.toStringz));
+    }
+
+    /**
+        Builds a integer cast
+    */
+    Value BuildIntCast(Value value, Type destType, bool isSigned, string name = "") {
+        return new Value(LLVMBuildIntCast2(ptr, value.ptr, destType.ptr, cast(LLVMBool)isSigned, name.toStringz));
+    }
+
+    /**
         Builds a shift-left instruction
 
         Shifts the values of lhs to the left by the amount of bits specified in rhs
@@ -444,12 +458,36 @@ public:
     }
 
     /**
-        Builds a Signed Int to Floating Point instruction
+        Builds a Signed Int To Floating Point instruction
 
         Converts a signed integer type to a floating point type
     */
     Value BuildSIToFP(Value value, Type destType, string name = "") {
         return new Value(LLVMBuildSIToFP(ptr, value.ptr, destType.ptr, name.toStringz));
+    }
+
+    /**
+        Builds a Unsigned Int To Floating Point instruction
+
+        Converts a unsigned integer type to a floating point type
+    */
+    Value BuildUIToFP(Value value, Type destType, string name = "") {
+        return new Value(LLVMBuildUIToFP(ptr, value.ptr, destType.ptr, name.toStringz));
+    }
+
+    /**
+        Builds a Floating Point To Signed Int instruction
+    */
+    Value BuildFPToSI(Value value, Type destType, string name = "") {
+        return new Value(LLVMBuildFPToSI(ptr, value.ptr, destType.ptr, name.toStringz));
+    }
+
+
+    /**
+        Builds a Floating Point To Unsigned Int instruction
+    */
+    Value BuildFPToUI(Value value, Type destType, string name = "") {
+        return new Value(LLVMBuildFPToUI(ptr, value.ptr, destType.ptr, name.toStringz));
     }
 
     /**

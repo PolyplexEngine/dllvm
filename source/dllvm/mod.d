@@ -123,6 +123,27 @@ public:
     }
 
     /**
+        Adds a global value in to the module
+    */
+    GlobalValue AddGlobal(Type type, string name) {
+        return new GlobalValue(LLVMAddGlobal(ptr, type.ptr, name.toStringz));
+    }
+
+    /**
+        Adds a global variable in to the module
+    */
+    GlobalVariable AddGlobalVar(Type type, string name) {
+        return new GlobalVariable(LLVMAddGlobal(ptr, type.ptr, name.toStringz));
+    }
+
+    /**
+        Adds a global alias in to the module
+    */
+    GlobalAlias AddGlobalAlias(Type type, string name) {
+        return new GlobalAlias(LLVMAddGlobal(ptr, type.ptr, name.toStringz));
+    }
+
+    /**
         Gets the first function in the module
     */
     @property
