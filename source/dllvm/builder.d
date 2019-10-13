@@ -402,6 +402,41 @@ public:
     }
 
     /**
+        Builds an integer compare
+    */
+    Value BuildICmp(IntPredicate op, Value lhs, Value rhs, string name = "") {
+        return new Value(LLVMBuildICmp(ptr, op, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        Builds an float compare
+    */
+    Value BuildFCmp(RealPredicate op, Value lhs, Value rhs, string name = "") {
+        return new Value(LLVMBuildFCmp(ptr, op, lhs.ptr, rhs.ptr, name.toStringz));
+    }
+
+    /**
+        Branch instruction
+    */
+    Value BuildBranch(BasicBlock dest) {
+        return new Value(LLVMBuildBr(ptr, dest.ptr));
+    }
+
+    /**
+        Conditional branch instruction
+    */
+    Value BuildConditionalBranch(Value if_, BasicBlock then, BasicBlock else_) {
+        return new Value(LLVMBuildCondBr(ptr, if_.ptr, then.ptr, else_.ptr));
+    }
+
+    /**
+        Builds an indirect branch
+    */
+    Value BuildIndirectBranch(Value address, uint layers) {
+        return new Value(LLVMBuildIndirectBr(ptr, address.ptr, layers));
+    }
+
+    /**
         Builds a select instruction.
         Select selects a value based on the 1i (bool) value of the if_ value.
     */

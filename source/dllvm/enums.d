@@ -395,3 +395,43 @@ enum AttributeIndex : LLVMAttributeIndex {
     Return = LLVMAttributeReturnIndex,
     Function = LLVMAttributeFunctionIndex
 }
+
+/**
+    predicate for integer values
+*/
+enum IntPredicate : LLVMIntPredicate {
+    Equal =                 LLVMIntEQ,
+    NotEqual =              LLVMIntNE,
+    UnsignedGreater =       LLVMIntUGT,
+    UnsignedGreaterEqual =  LLVMIntUGE,
+    UnsignedLesser =        LLVMIntULT,
+    UnsignedLesserEqual =   LLVMIntULE,
+    SignedGreater =         LLVMIntSGT,
+    SignedGreaterEqual =    LLVMIntSGE,
+    SignedLesser =          LLVMIntSLT,
+    SignedLesserEqual =     LLVMIntSLE
+}
+
+/**
+    Predicates for ordered (non-nan) and unordered (nan-able) real types.
+*/
+enum RealPredicate : LLVMRealPredicate {
+    OrderedEqual =          LLVMRealOEQ,
+    OrderedGreater =        LLVMRealOGT,
+    OrderedGreaterEqual =   LLVMRealOGE,
+    OrderedLesser =         LLVMRealOLT,
+    OrderedLesserEqual =    LLVMRealOLE,
+    OrderedNotEqual =       LLVMRealONE,
+    Ordered =               LLVMRealORD,
+    
+    Unordered =             LLVMRealUNO,
+    UnorderedEqual =        LLVMRealUEQ,
+    UnorderedGreater =      LLVMRealUGT,
+    UnorderedGreaterEqual = LLVMRealUGE,
+    UnorderedLesser =       LLVMRealULT,
+    UnorderedLesserEqual =  LLVMRealULE,
+    UnorderedNotEqual =     LLVMRealUNE,
+
+    RealFalse =             LLVMRealPredicateFalse,
+    RealTrue =              LLVMRealPredicateTrue
+}
