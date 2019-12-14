@@ -563,12 +563,29 @@ public:
     }
 
     /**
-        Builds a Struct GEP instruction
+        Builds a GEP instruction
 
         I don't know what this does yet.
     */
-    Value BuildStructGEP(Type type, Value addr, uint idx, string name = "") {
-        return new Value(LLVMBuildStructGEP2(ptr, type.ptr, addr.ptr, idx, name.toStringz));
+    Value BuildGEP(Value addr, Value[] indices, string name = "") {
+        // Convert D Value to LLVM native types
+        LLVMValueRef[] refs = new LLVMValueRef[indices.length];
+        foreach(i, item; indices) refs[i] = item.ptr; 
+
+        return new Value(LLVMBuildGEP(ptr, addr.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
+    }
+
+    /**
+        Builds a GEP instruction
+
+        I don't know what this does yet.
+    */
+    Value BuildInboundsGEP(Value addr, Value[] indices, string name = "") {
+        // Convert D Value to LLVM native types
+        LLVMValueRef[] refs = new LLVMValueRef[indices.length];
+        foreach(i, item; indices) refs[i] = item.ptr; 
+
+        return new Value(LLVMBuildInBoundsGEP(ptr, addr.ptr, refs.ptr, cast(uint)refs.length, name.toStringz));
     }
 
     /**

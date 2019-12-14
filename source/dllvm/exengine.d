@@ -83,6 +83,10 @@ public:
     }
 
     ~this() {
+        foreach(mod; managedModules) {
+            RemoveModule(mod);
+        }
+        LLVMDisposePassManager(pass);
         LLVMDisposeExecutionEngine(ptr);
     }
 
